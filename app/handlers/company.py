@@ -1,15 +1,15 @@
-from aiogram import Router, Bot, F
-from aiogram.types import Message
+from aiogram import Router, F
+from aiogram.types import CallbackQuery
 from aiogram.fsm.context import FSMContext
 
 from app.texts.company import COMPANY_TEXT
-from app.utils.bot_msg import edit_or_replace, safe_delete
+from app.keyboards.main_menu import back_main_menu_keyboard
 
 router = Router()
 
 
-@router.message(F.text == "О компании")
-async def company_handler(message: Message, state: FSMContext, bot: Bot):
-    await safe_delete(message)
+@router.callback_query(F.data == "menu_company")
+async def company_handler(callback: CallbackQuery, state: FSMContext):
     await state.set_state(None)
-    await edit_or_replace(bot, message.chat.id, state, COMPANY_TEXT)
+    await callback.message.edit_text(COMPANY_TEXT, reply_markup=back_main_menu_keyboard(), parse_mode="HTML")
+    await callback.answer()

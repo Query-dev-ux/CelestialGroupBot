@@ -1,6 +1,6 @@
 COMPANY_TEXT = """
-<b>CELESTIAL GROUP</b>
-WE BUILD SYSTEMS THAT SCALE
+<b>CELESTIAL GROUP
+WE BUILD SYSTEMS THAT SCALE</b>
 
 Мы выстраиваем системы, где трафик, данные и процессы работают как единый механизм.
 Наш фокус — Tier-3 GEO: объём, качество и масштаб на уровне, который сложно повторить.

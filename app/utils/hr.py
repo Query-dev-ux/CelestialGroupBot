@@ -20,8 +20,16 @@ async def forward_to_hr(bot: Bot, message: Message, state: FSMContext, label: st
         pass
 
     confirmation = "✅ Резюме отправлено! Мы свяжемся с тобой."
-    try:
-        await bot.edit_message_text(chat_id=message.chat.id, message_id=bot_msg_id, text=confirmation)
-    except Exception:
-        sent = await message.answer(confirmation)
-        await state.update_data(bot_msg_id=sent.message_id)
+    if bot_msg_id:
+        try:
+            await bot.edit_message_text(
+                chat_id=message.chat.id,
+                message_id=bot_msg_id,
+                text=confirmation,
+            )
+            return
+        except Exception:
+            pass
+
+    sent = await message.answer(confirmation)
+    await state.update_data(bot_msg_id=sent.message_id)

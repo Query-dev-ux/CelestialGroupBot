@@ -2,12 +2,11 @@ from aiogram import Router, Bot, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
 
-from app.texts.vacancies import VACANCIES_TEXT, SEND_CV_TEXT, HR_Assistant, Facebook_Media_Buyer, SEO_Specialist, Google_Media_Buyer
-from app.texts.apply import HR_Assistant_apply, Facebook_Media_Buyer_apply, SEO_Specialist_apply, Google_Media_Buyer_apply
+from app.texts.vacancies import VACANCIES_TEXT, SEND_CV_TEXT, HR_Assistant, Facebook_Media_Buyer, SEO_Specialist, Google_Media_Buyer, Senior_Media_Buyer, BizDev, Affiliate_Manager
+from app.texts.apply import HR_Assistant_apply, Facebook_Media_Buyer_apply, SEO_Specialist_apply, Google_Media_Buyer_apply, Senior_Media_Buyer_apply, BizDev_apply, Affiliate_Manager_apply
 from app.keyboards.vacancies_menu import vacancies_keyboard
 from app.keyboards.vac_keyboard import vac_keyboard
 from app.keyboards.apply_keyboard import apply_keyboard, send_cv_keyboard
-from app.utils.bot_msg import edit_or_replace, safe_delete
 from app.utils.hr import forward_to_hr
 from app.states.apply import ApplyState
 from app.states.resume import ResumeState
@@ -15,36 +14,51 @@ from app.states.resume import ResumeState
 router = Router()
 
 VACANCIES = {
-    "vac_hr": {
-        "name":       "HR Assistant",
-        "text":       HR_Assistant,
-        "apply_text": HR_Assistant_apply,
+    "vac_senior": {
+        "name":       "Senior Media Buyer (iGaming)",
+        "text":       Senior_Media_Buyer,
+        "apply_text": Senior_Media_Buyer_apply,
     },
     "vac_fb": {
         "name":       "Media Buyer (Facebook)",
         "text":       Facebook_Media_Buyer,
         "apply_text": Facebook_Media_Buyer_apply,
     },
+    "vac_google": {
+        "name":       "Media Buyer (Google)",
+        "text":       Google_Media_Buyer,
+        "apply_text": Google_Media_Buyer_apply,
+    },
     "vac_seo": {
         "name":       "SEO Specialist",
         "text":       SEO_Specialist,
         "apply_text": SEO_Specialist_apply,
     },
-    "vac_google": {
-        "name":       "Media Buyer (Google)",
-        "text":       Google_Media_Buyer,
-        "apply_text": Google_Media_Buyer_apply,
+    "vac_hr": {
+        "name":       "HR Assistant",
+        "text":       HR_Assistant,
+        "apply_text": HR_Assistant_apply,
+    },
+    "vac_bizdev": {
+        "name":       "Business Development Manager (iGaming)",
+        "text":       BizDev,
+        "apply_text": BizDev_apply,
+    },
+    "vac_affiliate": {
+        "name":       "Affiliate Manager (iGaming)",
+        "text":       Affiliate_Manager,
+        "apply_text": Affiliate_Manager_apply,
     },
 }
 
 
 # ── Список вакансий ───────────────────────────────────────────────────────────
 
-@router.message(F.text == "Открытые вакансии")
-async def vacancies_handler(message: Message, state: FSMContext, bot: Bot):
-    await safe_delete(message)
+@router.callback_query(F.data == "menu_vacancies")
+async def vacancies_handler(callback: CallbackQuery, state: FSMContext):
     await state.set_state(None)
-    await edit_or_replace(bot, message.chat.id, state, VACANCIES_TEXT, reply_markup=vacancies_keyboard(), parse_mode=None)
+    await callback.message.edit_text(VACANCIES_TEXT, reply_markup=vacancies_keyboard())
+    await callback.answer()
 
 
 @router.callback_query(F.data == "back_vacancies")
