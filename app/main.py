@@ -21,7 +21,8 @@ async def main():
 
 if __name__ == "__main__":
     ssl._create_default_https_context = ssl._create_unverified_context
-    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+    if hasattr(asyncio, "WindowsProactorEventLoopPolicy"):
+        asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
