@@ -4,7 +4,7 @@ from aiogram.fsm.context import FSMContext
 
 from app.texts.vacancies import VACANCIES_TEXT, SEND_CV_TEXT, HR_Assistant, Facebook_Media_Buyer, SEO_Specialist, Google_Media_Buyer, Senior_Media_Buyer, BizDev, Affiliate_Manager
 from app.texts.apply import HR_Assistant_apply, Facebook_Media_Buyer_apply, SEO_Specialist_apply, Google_Media_Buyer_apply, Senior_Media_Buyer_apply, BizDev_apply, Affiliate_Manager_apply
-from app.keyboards.vacancies_menu import vacancies_keyboard
+from app.keyboards.vacancies_keyboard import vacancies_keyboard
 from app.keyboards.vac_keyboard import vac_keyboard
 from app.keyboards.apply_keyboard import apply_keyboard, send_cv_keyboard
 from app.utils.hr import forward_to_hr
