@@ -15,11 +15,6 @@ async def start_handler(message: Message, state: FSMContext, bot: Bot):
     old_msg_id = data.get("bot_msg_id")
     await state.clear()
 
-    try:
-        await message.delete()
-    except Exception:
-        pass
-
     if old_msg_id:
         try:
             await bot.edit_message_text(
