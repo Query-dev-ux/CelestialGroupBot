@@ -23,8 +23,13 @@ async def forward_to_hr(bot: Bot, message: Message, state: FSMContext, label: st
 
     await submit_telegram_application(
         telegram_user_id=message.from_user.id,
+        telegram_full_name=message.from_user.full_name,
+        telegram_username=message.from_user.username,
         vacancy_ref=vacancy_ref,
-        candidate_text=message.text,
+        # .text is only set for plain-text messages — a resume file sent
+        # with a caption carries that text in .caption instead, and .text
+        # is None there. Without this fallback that text was silently lost.
+        candidate_text=message.text or message.caption,
         resume_file_ref=message.document.file_id if message.document else None,
     )
 

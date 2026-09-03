@@ -22,6 +22,8 @@ logger = logging.getLogger(__name__)
 async def submit_telegram_application(
     *,
     telegram_user_id: int,
+    telegram_full_name: Optional[str] = None,
+    telegram_username: Optional[str] = None,
     vacancy_ref: Optional[str],
     candidate_text: Optional[str],
     resume_file_ref: Optional[str],
@@ -32,6 +34,8 @@ async def submit_telegram_application(
 
     payload = {
         "telegram_user_id": telegram_user_id,
+        "telegram_full_name": telegram_full_name,
+        "telegram_username": telegram_username,
         "vacancy_ref": vacancy_ref,
         "candidate_text": candidate_text,
         "resume_file_ref": resume_file_ref,
