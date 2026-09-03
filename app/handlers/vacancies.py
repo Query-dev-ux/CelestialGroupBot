@@ -108,7 +108,10 @@ async def handle_apply(message: Message, state: FSMContext, bot: Bot):
     vac = VACANCIES.get(data.get("current_vac"))
     vac_name = vac["name"] if vac else "не указана"
     await state.set_state(None)
-    await forward_to_hr(bot, message, state, f"Отклик на вакансию: {vac_name}")
+    # vacancy_ref = vac["name"] — matches Recruitment Service's crm_vacancy_id
+    # by the vacancy's display name (opaque string on both sides; there's no
+    # shared numeric/slug id between this bot's hardcoded list and CRM yet).
+    await forward_to_hr(bot, message, state, f"Отклик на вакансию: {vac_name}", vacancy_ref=vac["name"] if vac else None)
 
 
 # ── Общее резюме (кнопка «Отправить резюме») ──────────────────────────────────
